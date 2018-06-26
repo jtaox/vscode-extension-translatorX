@@ -2,7 +2,7 @@
   "name": "vscode-translatorx",
   "displayName": "TranslatorX",
   "description": "translator",
-  "version": "0.0.3",
+  "version": "0.0.2",
   "publisher": "jiangtao",
   "icon": "assets/icon.png",
   "engines": {
