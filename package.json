@@ -2,7 +2,7 @@
   "name": "vscode-translatorx",
   "displayName": "TranslatorX",
   "description": "translator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "jiangtao",
   "icon": "assets/icon.png",
   "engines": {
@@ -19,8 +19,8 @@
     "Other"
   ],
   "bugs": {
-      "url": "https://github.com/jtaox/vscode-extension-translatorX/issues",
-      "email": "jtaobox@126.com"
+    "url": "https://github.com/jtaox/vscode-extension-translatorX/issues",
+    "email": "jtaobox@126.com"
   },
   "activationEvents": [
     "*"
@@ -28,8 +28,8 @@
   "license": "MIT",
   "homepage": "https://github.com/jtaox/vscode-extension-translatorX",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/jtaox/vscode-extension-translatorX.git"
+    "type": "git",
+    "url": "https://github.com/jtaox/vscode-extension-translatorX.git"
   },
   "main": "./out/extension",
   "contributes": {
