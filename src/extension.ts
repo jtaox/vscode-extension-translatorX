@@ -58,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 const reg = /^[^\u4e00-\u9fa5\w]*|[^\u4e00-\u9fa5\w]*$/g
 
-function trim(str: string) {
+function trim(str: string): string {
   return str.trim().replace(reg, '')
 }
 
