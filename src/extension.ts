@@ -9,6 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let { workspace, window, languages } = vscode
 	let editor = window.activeTextEditor
+	console.log(editor)
 	if (!editor) return
 
 	let translatorX = new TranslatorX(workspace.getConfiguration("translatorX"))
@@ -50,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}
 
-	languages.registerHoverProvider({ language: '*' }, provider)
+	languages.registerHoverProvider({ scheme: 'file', language: '*' }, provider)
 
 	context.subscriptions.push(enable)
 	context.subscriptions.push(disable)
