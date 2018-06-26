@@ -1,0 +1,66 @@
+{
+  "name": "vscode-translatorx",
+  "displayName": "vscode-translatorx",
+  "description": "translator",
+  "version": "0.0.1",
+  "publisher": "jiangtao",
+  "icon": "./assets/icon.png",
+  "engines": {
+    "vscode": "^1.21.1"
+  },
+  "galleryBanner": {
+    "color": "#1296DB",
+    "theme": "dark"
+  },
+  "keywords": [
+    "translate"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "bugs": {
+      "url": "https://github.com/jtaox/vscode-extension-translatorX/issues",
+      "email": "jtaobox@126.com"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jtaox/vscode-extension-translatorX",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/jtaox/vscode-extension-translatorX.git"
+  },
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.enable",
+        "title": "启用translatorX",
+        "category": "translatorX"
+      },
+      {
+        "command": "extension.disable",
+        "title": "禁用translatorX",
+        "category": "translatorX"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6",
+    "tslint": "^5.8.0",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
