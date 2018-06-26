@@ -2,11 +2,11 @@
   "name": "vscode-translatorx",
   "displayName": "TranslatorX",
   "description": "translator",
-  "version": "0.0.3",
+  "version": "0.0.3.1",
   "publisher": "jiangtao",
   "icon": "assets/icon.png",
   "engines": {
-    "vscode": "^1.21.1"
+    "vscode": "^1.18.1"
   },
   "galleryBanner": {
     "color": "#232323",
