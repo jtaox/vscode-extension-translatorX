@@ -4,7 +4,7 @@
   "description": "translator",
   "version": "0.0.1",
   "publisher": "jiangtao",
-  "icon": "./assets/icon.png",
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.21.1"
   },
