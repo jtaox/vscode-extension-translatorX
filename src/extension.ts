@@ -3,14 +3,8 @@ import * as vscode from "vscode"
 import TranslatorX from './TranslatorX'
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log(
-    'Congratulations, your extension "vscode-translatorx" is now active!'
-  )
 
 	let { workspace, window, languages } = vscode
-	let editor = window.activeTextEditor
-	console.log(editor)
-	if (!editor) return
 
 	let translatorX = new TranslatorX(workspace.getConfiguration("translatorX"))
 
@@ -24,6 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	let provider = {
 		async provideHover(document: any, position: any, token: any) {
+			let editor = window.activeTextEditor
+			if (!editor) return
 			const selection = editor && editor.selection
 
 			// range可能为空
