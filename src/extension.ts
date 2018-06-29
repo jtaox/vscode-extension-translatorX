@@ -48,6 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	languages.registerHoverProvider({ scheme: 'file', language: '*' }, provider)
+	languages.registerHoverProvider({ scheme: 'untitled' }, provider)
 
 	context.subscriptions.push(enable)
 	context.subscriptions.push(disable)
