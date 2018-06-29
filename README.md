@@ -1,5 +1,7 @@
 # vscode-translatorx
 
+![version](https://vsmarketplacebadge.apphb.com/version/jiangtao.vscode-translatorx.svg)
+
 vscode 翻译插件
 
 ## 使用
