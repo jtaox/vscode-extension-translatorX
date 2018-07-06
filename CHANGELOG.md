@@ -1,15 +1,20 @@
 # Change Log
 
+# 0.1.2 - 2018-7-6
+
+- 支持了untitled类型临时文件的翻译
+
 # 0.1.1 - 2018-6-29
 
-- Fixed a bug in command not found when opening vscode without activeTextEditor for the first time
+- 修复了打开vsc没有activeTextEditor的情况下，导致命令注册失败的bug
 
 ## 0.0.6 - 2018-6-26
 
-- Fixed `command not found` bug when using some new versions of vsc
+- 修复了在某些新版本会提示`command not found`的bug
 
 ## 0.0.4 - 2018-6-26
-- Revised display name, modified minimum compatible version
+- 修改显示名称
+- 修改最低兼容版本
 
 ## 0.0.1 - 2018-6-26
-- initial release
+- 发布第一个版本
