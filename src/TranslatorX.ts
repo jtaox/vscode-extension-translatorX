@@ -2,6 +2,7 @@ import axios from "axios"
 import { URL } from "url"
 
 const baiduApi = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
+const youdaoApi = 'https://openapi.youdao.com/api'
 
 class TranslatorX {
   private conf: any
@@ -21,6 +22,14 @@ class TranslatorX {
   }
 
   async fetch(params: {
+    word: string
+  }) {
+    return this.fetchFromBaidu({
+      word: params.word
+    })
+  }
+
+  async fetchFromBaidu(params: {
     word: string
   }) {
     let { word } = params
