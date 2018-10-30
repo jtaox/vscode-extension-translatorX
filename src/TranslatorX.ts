@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { URL } from 'url'
-import {md5 } from './utils'
+import { md5 } from './utils'
 
 const baiduApi = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
 const youdaoApi = 'https://openapi.youdao.com/api'

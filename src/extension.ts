@@ -1,6 +1,7 @@
 "use strict"
 import * as vscode from "vscode"
 import TranslatorX from './TranslatorX'
+import { trim } from './utils'
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -54,10 +55,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disable)
 }
 
-const reg = /^[^\u4e00-\u9fa5\w]*|[^\u4e00-\u9fa5\w]*$/g
 
-function trim(str: string): string {
-  return str.trim().replace(reg, '')
-}
+
+
 
 export function deactivate() {}
