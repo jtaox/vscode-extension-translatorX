@@ -16,6 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
   let disable = vscode.commands.registerCommand("extension.disable", () => {
     translatorX.setTranslatorXState(false)
 	})
+
+	let test = vscode.commands.registerCommand('extension.test', () => {
+		console.log('test command')
+	})
 	
 	let provider = {
 		async provideHover(document: any, position: any, token: any) {
@@ -50,9 +54,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	languages.registerHoverProvider({ scheme: 'file', language: '*' }, provider)
 	languages.registerHoverProvider({ scheme: 'untitled' }, provider)
-
+	console.log('test')
 	context.subscriptions.push(enable)
 	context.subscriptions.push(disable)
+	context.subscriptions.push(test)
 }
 
 
