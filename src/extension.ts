@@ -7,7 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let { workspace, window, languages } = vscode
 
-	let translatorX = new TranslatorX(workspace.getConfiguration("translatorX"))
+	let translatorX = new TranslatorX(workspace.getConfiguration("TranslatorX"))
 
   let enable = vscode.commands.registerCommand("extension.enable", () => {
       translatorX.setTranslatorXState(true)

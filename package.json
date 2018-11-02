@@ -45,6 +45,17 @@
         "category": "translatorX"
       }
     ],
+    "configuration": {
+      "type": "object",
+      "title": "TranslatorX",
+      "properties": {
+        "TranslatorX.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "TranslatorX开关"
+        }
+      }
+    },
     "keybindings": [
       {
         "command": "extension.test",
