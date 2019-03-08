@@ -52,7 +52,22 @@
         "TranslatorX.enable": {
           "type": "boolean",
           "default": true,
-          "description": "TranslatorX开关"
+          "description": "TranslatorX开关 开启状态下默认启用baidu api"
+        },
+        "TranslatorX.youdao.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "TranslatorX 有道翻译功能"
+        },
+        "TranslatorX.youdao.secret": {
+          "type": "string",
+          "default": "",
+          "description": "有道api secret"
+        },
+        "TranslatorX.youdao.appKey": {
+          "type": "string",
+          "default": "",
+          "description": "有道api appkey"
         }
       }
     },
@@ -79,6 +94,6 @@
     "@types/mocha": "^2.2.42"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
   }
 }

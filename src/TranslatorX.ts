@@ -4,14 +4,30 @@ import { md5 } from './utils'
 
 const baiduApi = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
 const youdaoApi = 'https://openapi.youdao.com/api'
-const secret = 'pZ1OO5dgK2UWnAjt3WOf1loIrtcmrJpg'
+
+interface YoudaoConfig {
+  secret: string,
+  appKey: string,
+  enable: boolean
+}
 
 class TranslatorX {
   private conf: any
   private state: boolean
+  private youdaoState: boolean
+  private youdaoSecret: string
+  private youdaoAppKey: string
+
   public constructor(conf: any) {
     this.conf = conf
+
+    const { enable, secret, appKey } = this.getYoudaoApiConfig()
     this.state = this.getTrarnslatorXState()
+
+    this.youdaoState = enable
+    this.youdaoSecret = secret
+    this.youdaoAppKey = appKey
+
   }
 
   public getTrarnslatorXState(): boolean {
@@ -23,10 +39,14 @@ class TranslatorX {
     this.state = b
   }
 
+  public getYoudaoApiConfig(): YoudaoConfig {
+    return this.conf.get('youdao')
+  }
+
   async fetch(params: {
     word: string
   }) {
-    this.fetchFromYoudao(params.word)
+    this.fetchFromYoudao(params.word).then()
     return this.fetchFromBaidu({
       word: params.word
     })
@@ -73,8 +93,10 @@ class TranslatorX {
     word: string
   ) {
     const url = new URL(youdaoApi)
-    const appKey = 'appkey'
+    const appKey = this.youdaoAppKey
     const salt = Date.now().toString()
+    const secret = this.youdaoSecret
+    
     const sign = this.getSign({
       appKey, q: word, salt, secret
     })
@@ -86,8 +108,20 @@ class TranslatorX {
     url.searchParams.append('sign', sign)
     url.searchParams.append('q', word)
 
-    const { statusText, data } = await axios.get(url.toString())
-    console.log(statusText, data, '====')
+    let result = null
+    try {
+      result = await axios.get(url.toString())
+    } catch (error) {
+      console.log('request error', error)
+    }
+
+    if (!result) return
+    
+    const { statusText, data } = result
+
+    if (statusText === 'OK') {
+      console.log(data)
+    }
   }
 
   // 有道api 获取签名

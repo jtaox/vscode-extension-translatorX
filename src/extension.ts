@@ -2,10 +2,11 @@
 import * as vscode from "vscode"
 import TranslatorX from './TranslatorX'
 import { trim } from './utils'
+// import player from './utils/playSound'
 
 export function activate(context: vscode.ExtensionContext) {
 
-	let { workspace, window, languages } = vscode
+	let { workspace, window, languages, commands, Uri } = vscode
 
 	let translatorX = new TranslatorX(workspace.getConfiguration("TranslatorX"))
 
@@ -18,7 +19,11 @@ export function activate(context: vscode.ExtensionContext) {
 	})
 
 	let test = vscode.commands.registerCommand('extension.test', () => {
-		console.log('test command')
+		let editor = window.activeTextEditor
+		if (!editor) return
+		const selection = editor && editor.selection
+		const promise = commands.executeCommand('vscode.executeHoverProvider', workspace.textDocuments[0].uri, selection.active);
+		promise.then(res => console.log(res))
 	})
 	
 	let provider = {
@@ -54,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	languages.registerHoverProvider({ scheme: 'file', language: '*' }, provider)
 	languages.registerHoverProvider({ scheme: 'untitled' }, provider)
-	console.log('test')
+	
 	context.subscriptions.push(enable)
 	context.subscriptions.push(disable)
 	context.subscriptions.push(test)
