@@ -94,6 +94,6 @@
     "@types/mocha": "^2.2.42"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.0"
   }
 }
