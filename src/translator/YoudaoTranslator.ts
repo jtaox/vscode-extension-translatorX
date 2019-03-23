@@ -12,6 +12,10 @@ class YoudaoTranslator extends ABaseTranslatorAbstract {
 
     const sign = getYoudaoSign({appKey, q, salt, secret})
 
+    if ( !secret || !appKey ) {
+      throw new Error('请配置有道api secret、appKey')
+    }
+
     return {
       appKey,
       secret,

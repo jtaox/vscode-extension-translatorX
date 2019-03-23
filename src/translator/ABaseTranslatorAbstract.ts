@@ -74,8 +74,21 @@ abstract class TranslatorAbstract {
 
   public fetchTranslationResult(word: string): Promise<any> {
     this.selectWord = word
+    let params = undefined
+    let errorMsg = null
 
-    return fetch(this.getUrlWithParams(this.apiUrl, this.getParams(word)))
+    try {
+      params = this.getParams(word)
+    } catch (error) {
+      errorMsg = error.message
+    }
+
+    if (params) {
+      return fetch(this.getUrlWithParams(this.apiUrl, params))
+    } else {
+      return Promise.resolve({ error: errorMsg })
+    }
+    
   }
 
   public async fetchStandardResult (word: string): Promise<MarkdownString> {
@@ -83,10 +96,14 @@ abstract class TranslatorAbstract {
 
     const title = this.getResultTitle()
 
-    const result = this.parseRawResult(rawResult)
-
     const ms = new MarkdownString(title)
     ms.appendText('\n\n')
+
+    if (rawResult.error) {
+      return ms.appendMarkdown(`❌ ${ rawResult.error }`)
+    }
+
+    const result = this.parseRawResult(rawResult)
 
     if (!Array.isArray(result)) {
       return ms.appendMarkdown(`* ${result} *`)
