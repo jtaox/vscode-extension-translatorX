@@ -1,7 +1,7 @@
 import ABaseTranslatorAbstract from './ABaseTranslatorAbstract'
 
 class BadiduTranslator extends ABaseTranslatorAbstract {
-  
+
   apiUrl = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
   configSection = 'baidu'
 
@@ -13,7 +13,7 @@ class BadiduTranslator extends ABaseTranslatorAbstract {
   }
 
   getResultTitle(): string {
-    return 'baidu API:'
+    return 'baidu:'
   }
 
   parseRawResult(result: any) {

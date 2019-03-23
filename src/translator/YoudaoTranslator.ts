@@ -28,7 +28,7 @@ class YoudaoTranslator extends ABaseTranslatorAbstract {
   }
 
   getResultTitle(): string {
-    return 'youdao API:'
+    return 'youdao:'
   }
 
   parseRawResult(result: any) {
