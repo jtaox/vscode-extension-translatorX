@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { URL } from 'url'
 import { md5 } from './utils'
+import BaiduTranslator from './translator/BaiduTranslator'
 
 const baiduApi = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
 const youdaoApi = 'https://openapi.youdao.com/api'
@@ -17,6 +18,7 @@ class TranslatorX {
   private youdaoState: boolean
   private youdaoSecret: string
   private youdaoAppKey: string
+  private baiduTranslator: BaiduTranslator
 
   public constructor(conf: any) {
     this.conf = conf
@@ -27,6 +29,8 @@ class TranslatorX {
     this.youdaoState = enable
     this.youdaoSecret = secret
     this.youdaoAppKey = appKey
+
+    this.baiduTranslator = new BaiduTranslator()
 
   }
 
@@ -46,10 +50,7 @@ class TranslatorX {
   async fetch(params: {
     word: string
   }) {
-    this.fetchFromYoudao(params.word).then()
-    return this.fetchFromBaidu({
-      word: params.word
-    })
+    return this.baiduTranslator.fetchStandardResult(params.word)
   }
 
   handleBaiduResult(data: any): Array<string> {
@@ -65,6 +66,12 @@ class TranslatorX {
       arr = [`result error-${errno}`]
     }
     return arr
+  }
+
+  handleYoudaoResult(data: any): Array<String> {
+    console.log(data)
+
+    return []
   }
 
   async fetchFromBaidu(params: {
@@ -92,6 +99,7 @@ class TranslatorX {
   async fetchFromYoudao(
     word: string
   ) {
+    
     const url = new URL(youdaoApi)
     const appKey = this.youdaoAppKey
     const salt = Date.now().toString()
@@ -107,7 +115,7 @@ class TranslatorX {
     url.searchParams.append('ext', 'mp3')
     url.searchParams.append('sign', sign)
     url.searchParams.append('q', word)
-
+    
     let result = null
     try {
       result = await axios.get(url.toString())
@@ -118,9 +126,8 @@ class TranslatorX {
     if (!result) return
     
     const { statusText, data } = result
-
     if (statusText === 'OK') {
-      console.log(data)
+      this.handleYoudaoResult(data)
     }
   }
 
