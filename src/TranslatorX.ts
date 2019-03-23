@@ -58,7 +58,7 @@ class TranslatorX {
       result.push(await this.baiduTranslator.fetchStandardResult(params.word))
     }
 
-    return result
+    return this.state ? result : []
   }
 
 
