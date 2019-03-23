@@ -45,9 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 			string = trim(string)
 			if (!string) return
 			const arr = await translatorX.fetch({ word: string })
-			
 			if (arr) {
-			
 				let hover = new vscode.Hover(arr)
 				return hover
 			}

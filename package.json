@@ -54,6 +54,11 @@
           "default": true,
           "description": "TranslatorX开关 开启状态下默认启用baidu api"
         },
+        "TranslatorX.baidu.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "TranslatorX 百度翻译功能"
+        },
         "TranslatorX.youdao.enable": {
           "type": "boolean",
           "default": true,

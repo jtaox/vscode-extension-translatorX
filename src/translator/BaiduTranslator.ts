@@ -1,7 +1,9 @@
 import ABaseTranslatorAbstract from './ABaseTranslatorAbstract'
 
 class BadiduTranslator extends ABaseTranslatorAbstract {
+  
   apiUrl = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
+  configSection = 'baidu'
 
   getParams(word: string): any {
     return {
@@ -23,7 +25,7 @@ class BadiduTranslator extends ABaseTranslatorAbstract {
     const { result: reqResult } = data
 
     const res = reqResult.map(({pre,cont}: any) => {
-      return [pre, cont]
+      return [`*${pre}*`, cont]
     })
 
     return res

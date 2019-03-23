@@ -1,12 +1,26 @@
 import { URL } from "url"
 import fetch from "./../utils/request"
-import { MarkdownString, MarkedString } from 'vscode'
+import { MarkdownString, workspace, WorkspaceConfiguration } from 'vscode'
+
+const EXTENSION_NAME = 'TranslatorX'
 
 abstract class TranslatorAbstract {
+
   /**
    * api地址
    */
   abstract apiUrl: string
+
+  /**
+   * 配置命名空间
+   */
+  abstract configSection: string
+
+  private extensionConfig: WorkspaceConfiguration
+
+  constructor () {
+    this.extensionConfig = workspace.getConfiguration(EXTENSION_NAME)
+  }
 
   /**
    * 获取参数
@@ -14,7 +28,16 @@ abstract class TranslatorAbstract {
    */
   abstract getParams(word: string): any
 
-  abstract parseRawResult(result: any): Array<any>
+  abstract parseRawResult(result: any): Array<any> | string
+
+  /**
+   * 获取当前翻译设置状态
+   */
+  getStatus(): boolean {
+    const currentConfig = this.getConfig(this.configSection) || {}
+
+    return Boolean(currentConfig.enable)
+  }
 
   /**
    * 用户选中的文字
@@ -28,6 +51,10 @@ abstract class TranslatorAbstract {
    */
   protected getResultTitle (): string {
     return this.selectWord + '翻译结果'
+  }
+
+  getConfig (section: string): any {
+    return this.extensionConfig.get(section)
   }
 
   /**
@@ -59,15 +86,19 @@ abstract class TranslatorAbstract {
     const result = this.parseRawResult(rawResult)
 
     const ms = new MarkdownString(title)
+    ms.appendText('\n\n')
 
-    if (!Array.isArray) {
+    if (!Array.isArray(result)) {
       return ms.appendMarkdown(`* ${result} *`)
     }
-
+    
     result.forEach((record: Array<string>)  => {
-      const [pre, cont] = record
+      if (Array.isArray(record)) {
+        record.forEach(item => ms.appendMarkdown(`- ${item}`) && ms.appendText('  '))
+      } else {
+        ms.appendMarkdown(record)
+      }
       ms.appendText('\n\n')
-      ms.appendMarkdown(`- *${pre}*  ${cont}`)
     })
 
     return ms
