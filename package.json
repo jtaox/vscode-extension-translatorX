@@ -52,7 +52,7 @@
         "TranslatorX.enable": {
           "type": "boolean",
           "default": true,
-          "description": "TranslatorX开关 开启状态下默认启用baidu api"
+          "description": "TranslatorX全局开关"
         },
         "TranslatorX.baidu.enable": {
           "type": "boolean",
