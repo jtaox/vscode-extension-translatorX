@@ -39,7 +39,7 @@ class YoudaoTranslator extends ABaseTranslatorAbstract {
       return '❌' + errorCode
     }
 
-    const arrayResult = []
+    const arrayResult: Array<any> = []
 
     if (translation && translation.length) {
       arrayResult.push(...translation.map((item: string) => `- ${item}`))
