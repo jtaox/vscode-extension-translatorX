@@ -43,6 +43,11 @@
         "command": "extension.disable",
         "title": "禁用translatorX",
         "category": "translatorX"
+      },
+      {
+        "command": "extension.replaceWithTranslationResults",
+        "title": "替换选中内容",
+        "category": "translatorX"
       }
     ],
     "configuration": {
@@ -81,6 +86,11 @@
         "command": "extension.test",
         "key": "ctrl+8",
         "mac": "cmd+8"
+      },
+      {
+        "command": "extension.replaceWithTranslationResults",
+        "key": "shift+alt+r",
+        "mac": "shift+cmd+r"
       }
     ]
   },

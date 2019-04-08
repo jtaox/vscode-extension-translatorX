@@ -62,6 +62,10 @@ class YoudaoTranslator extends ABaseTranslatorAbstract {
 
   }
 
+  getReplaceableResult(rawResult: any): Array<string> {
+    return rawResult.translation || []
+  }
+
 }
 
 export default YoudaoTranslator

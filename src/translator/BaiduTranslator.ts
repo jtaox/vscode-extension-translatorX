@@ -24,12 +24,18 @@ class BadiduTranslator extends ABaseTranslatorAbstract {
 
     const { result: reqResult } = data
 
+    if (typeof reqResult === 'string') return [[reqResult]]
+
     const res = reqResult.map(({pre,cont}: any) => {
       return [`*${pre}*`, cont]
     })
 
     return res
 
+  }
+
+  getReplaceableResult(rawResult: any): Array<string> {
+    return []
   }
 
 }

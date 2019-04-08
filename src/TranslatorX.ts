@@ -3,6 +3,7 @@ import { URL } from 'url'
 import { md5 } from './utils'
 import BaiduTranslator from './translator/BaiduTranslator'
 import YoudaoTranslator from './translator/YoudaoTranslator'
+import { TranslatorXFetchResult } from './translator/interface'
 import { MarkdownString } from 'vscode';
 
 const baiduApi = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
@@ -46,21 +47,28 @@ class TranslatorX {
 
   async fetch(params: {
     word: string
-  }): Promise<Array<MarkdownString> | void> {
+  }): Promise<TranslatorXFetchResult> {
 
     const result = []
+    const replaceable = []
 
     if (this.youdaoTranslator.getStatus()) {
-      result.push(await this.youdaoTranslator.fetchStandardResult(params.word))
+      const { markdown, replaceableArr } = await this.youdaoTranslator.fetchStandardResult(params.word)
+      result.push(markdown)
+      replaceable.push(...replaceableArr)
     }
 
     if (this.baiduTranslator.getStatus()) {
-      result.push(await this.baiduTranslator.fetchStandardResult(params.word))
+      const { markdown, replaceableArr } = await this.baiduTranslator.fetchStandardResult(params.word)
+      result.push(markdown)
+      replaceable.push(...replaceableArr)
     }
 
-    return this.state ? result : []
+    return {
+      translateResult: result,
+      replaceableArr: replaceable
+    }
   }
-
 
 }
 

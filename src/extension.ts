@@ -5,7 +5,11 @@ import { trim } from './utils'
 
 export function activate(context: vscode.ExtensionContext) {
 
-	let { workspace, window, languages, commands, Uri } = vscode
+	let { workspace, window, languages, commands, } = vscode
+
+	let gReplaceableArr: Array<string> = []
+	let gReplaceableIndex: number = 0
+	// let gRepTimer: number = null
 
 	let translatorX = new TranslatorX(workspace.getConfiguration("TranslatorX"))
 
@@ -23,6 +27,16 @@ export function activate(context: vscode.ExtensionContext) {
 		const selection = editor && editor.selection
 		const promise = commands.executeCommand('vscode.executeHoverProvider', workspace.textDocuments[0].uri, selection.active);
 		promise.then(res => console.log(res))
+	})
+
+
+	let replaceWithTranslationResults = vscode.commands.registerTextEditorCommand('extension.replaceWithTranslationResults', (textEditor, edit) => {
+		let editor = window.activeTextEditor
+		if (!editor) return
+		const selection = editor && editor.selection
+
+		edit.replace(selection, gReplaceableArr[gReplaceableIndex % gReplaceableArr.length])
+		gReplaceableIndex++
 	})
 	
 	let provider = {
@@ -47,11 +61,16 @@ export function activate(context: vscode.ExtensionContext) {
 			
 			string = string.replace(/\n/g,"")
 
-			const arr = await translatorX.fetch({ word: string })
-			if (arr) {
-				let hover = new vscode.Hover(arr)
+			const { replaceableArr, translateResult } = await translatorX.fetch({ word: string })
+			
+			gReplaceableArr = replaceableArr
+			gReplaceableIndex = 0
+
+			if (translateResult) {
+				let hover = new vscode.Hover(translateResult)
 				return hover
 			}
+			
 		}
 	}
 
@@ -61,6 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(enable)
 	context.subscriptions.push(disable)
 	context.subscriptions.push(test)
+	context.subscriptions.push(replaceWithTranslationResults)
 }
 
 

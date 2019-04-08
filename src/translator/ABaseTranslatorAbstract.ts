@@ -1,5 +1,6 @@
 import { URL } from "url"
 import fetch from "./../utils/request"
+import { StandardResultInterface } from './interface'
 import { MarkdownString, workspace, WorkspaceConfiguration } from 'vscode'
 
 const EXTENSION_NAME = 'TranslatorX'
@@ -29,6 +30,12 @@ abstract class TranslatorAbstract {
   abstract getParams(word: string): any
 
   abstract parseRawResult(result: any): Array<any> | string
+
+  /**
+   * 用户通过快捷键可以替换的内容数组 由子类实现
+   * @param rawResult 接口返回内容
+   */
+  abstract getReplaceableResult(rawResult: any): Array<string>
 
   /**
    * 获取当前翻译设置状态
@@ -91,7 +98,7 @@ abstract class TranslatorAbstract {
     
   }
 
-  public async fetchStandardResult (word: string): Promise<MarkdownString> {
+  public async fetchStandardResult (word: string): Promise<StandardResultInterface> {
     const rawResult = await this.fetchTranslationResult(word)
 
     const title = this.getResultTitle()
@@ -100,13 +107,13 @@ abstract class TranslatorAbstract {
     ms.appendText('\n\n')
 
     if (rawResult.error) {
-      return ms.appendMarkdown(`❌ ${ rawResult.error }`)
+      return {markdown: ms.appendMarkdown(`❌ ${ rawResult.error }`), replaceableArr: []}
     }
 
     const result = this.parseRawResult(rawResult)
 
     if (!Array.isArray(result)) {
-      return ms.appendMarkdown(`* ${result} *`)
+      return {markdown: ms.appendMarkdown(`* ${result} *`), replaceableArr: []}
     }
     
     result.forEach((record: Array<string>)  => {
@@ -118,7 +125,9 @@ abstract class TranslatorAbstract {
       ms.appendText('\n\n')
     })
 
-    return ms
+    const replaceable = this.getReplaceableResult(rawResult)
+
+    return {markdown: ms, replaceableArr: replaceable}
   }
 }
 
