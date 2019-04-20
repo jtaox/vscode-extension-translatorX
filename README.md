@@ -17,6 +17,6 @@
 ![example](https://github.com/jtaox/vscode-extension-translatorX/blob/master/assets/example_1.gif?raw=true)
 
 
-在 设置->扩展->TranslatorX 可单独打开或关闭有道翻译、百度翻译。如果开启有道翻译，需在设置中配置有道api所需的 appKey 和 secret，获取方式查看[https://ai.youdao.com/](https://ai.youdao.com/)
+在`设置->扩展->TranslatorX`可单独开启或关闭有道翻译、百度翻译。如果开启有道翻译，需在设置中配置有道api所需的 appKey 和 secret，获取方式查看[https://ai.youdao.com/](https://ai.youdao.com/)
 
 当开启有道翻译时，可通过快捷键shift + cmd + R 快速替换翻译结果，替换规则:`result[i++ % result.length]`
