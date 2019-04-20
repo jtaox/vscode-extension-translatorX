@@ -1,5 +1,15 @@
 # Change Log
 
+# 0.8.0 - 2019-4-20
+
+- 默认开启翻译
+
+- 添加手动配置功能
+
+- 添加有道翻译(需要注册[有道智云](https://ai.youdao.com/)，申请appkey和secret)
+
+> 因为publish的时候遇到了token错误、permission denied等问题，导致publish操作失败了多次，但版本号却一直在累加，所以发布成功后直接到了`0.8.0`，好坑😅
+
 # 0.1.2 - 2018-7-6
 
 - 支持了untitled类型临时文件的翻译
