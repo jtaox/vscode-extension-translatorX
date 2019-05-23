@@ -83,11 +83,6 @@
     },
     "keybindings": [
       {
-        "command": "extension.test",
-        "key": "ctrl+8",
-        "mac": "cmd+8"
-      },
-      {
         "command": "extension.replaceWithTranslationResults",
         "key": "shift+alt+r",
         "mac": "shift+cmd+r"

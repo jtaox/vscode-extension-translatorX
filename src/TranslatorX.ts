@@ -4,7 +4,7 @@ import { md5 } from './utils'
 import BaiduTranslator from './translator/BaiduTranslator'
 import YoudaoTranslator from './translator/YoudaoTranslator'
 import { TranslatorXFetchResult } from './translator/interface'
-import { MarkdownString } from 'vscode';
+import { MarkdownString, workspace, WorkspaceConfiguration } from 'vscode';
 
 const baiduApi = 'https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_/sensearch/selecttext'
 const youdaoApi = 'https://openapi.youdao.com/api'
@@ -21,8 +21,8 @@ class TranslatorX {
   private baiduTranslator: BaiduTranslator
   private youdaoTranslator: YoudaoTranslator
 
-  public constructor(conf: any) {
-    this.conf = conf
+  public constructor() {
+    this.conf = this.getWordSpaceConfiguration()
 
     this.state = this.getTrarnslatorXState()
 
@@ -30,6 +30,17 @@ class TranslatorX {
     this.baiduTranslator = new BaiduTranslator()
     this.youdaoTranslator = new YoudaoTranslator()
 
+    workspace.onDidChangeConfiguration(this.onDidChangeConfiguration, this)
+
+  }
+
+  private onDidChangeConfiguration() {
+    console.log('-------')
+    this.conf = this.getWordSpaceConfiguration()
+  }
+
+  private getWordSpaceConfiguration(): WorkspaceConfiguration {
+    return workspace.getConfiguration("TranslatorX")
   }
 
   public getTrarnslatorXState(): boolean {
@@ -51,14 +62,15 @@ class TranslatorX {
 
     const result = []
     const replaceable = []
+    const status = this.getTrarnslatorXState()
 
-    if (this.youdaoTranslator.getStatus()) {
+    if (status && this.youdaoTranslator.getStatus()) {
       const { markdown, replaceableArr } = await this.youdaoTranslator.fetchStandardResult(params.word)
       result.push(markdown)
       replaceable.push(...replaceableArr)
     }
 
-    if (this.baiduTranslator.getStatus()) {
+    if (status && this.baiduTranslator.getStatus()) {
       const { markdown, replaceableArr } = await this.baiduTranslator.fetchStandardResult(params.word)
       result.push(markdown)
       replaceable.push(...replaceableArr)
