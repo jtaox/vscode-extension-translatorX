@@ -1,9 +1,11 @@
 import { URL } from "url"
 import fetch from "./../utils/request"
 import { StandardResultInterface } from './interface'
-import { MarkdownString, workspace, WorkspaceConfiguration } from 'vscode'
+import { MarkdownString, workspace, WorkspaceConfiguration, Uri } from 'vscode'
 
 const EXTENSION_NAME = 'TranslatorX'
+const ICON_PLAY = '🗣'
+const ICON_STOP = '◼︎'
 
 abstract class TranslatorAbstract {
 
@@ -60,6 +62,13 @@ abstract class TranslatorAbstract {
     return this.selectWord + '翻译结果'
   }
 
+  /**
+   * 获取播放url，子类可选实现
+   */
+  protected getSpeakUrl(result: any): string | undefined {
+    return undefined
+  }
+
   getConfig (section: string): any {
     return this.extensionConfig.get(section)
   }
@@ -102,6 +111,7 @@ abstract class TranslatorAbstract {
     const rawResult = await this.fetchTranslationResult(word)
 
     const title = this.getResultTitle()
+    const speakUrl = this.getSpeakUrl(rawResult)
 
     const ms = new MarkdownString(title)
     ms.appendText('\n\n')
@@ -125,9 +135,22 @@ abstract class TranslatorAbstract {
       ms.appendText('\n\n')
     })
 
+    if (speakUrl) {
+      ms.appendMarkdown(this.getSpeakActionMarkdown(speakUrl))
+      ms.isTrusted = true
+    }
+    
     const replaceable = this.getReplaceableResult(rawResult)
 
     return {markdown: ms, replaceableArr: replaceable}
+  }
+
+  private getSpeakActionMarkdown(speakUrl: string): string {
+    const url = Uri.parse(
+      `command:extension.test?${encodeURIComponent(JSON.stringify({ speakUrl }))}`
+    );
+    console.log(url.toString())
+    return `[${ICON_PLAY}](${url})&nbsp;`
   }
 }
 

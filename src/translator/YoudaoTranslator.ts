@@ -31,6 +31,10 @@ class YoudaoTranslator extends ABaseTranslatorAbstract {
     return 'youdao:'
   }
 
+  getSpeakUrl(result: any): string {
+    return result.tSpeakUrl
+  }
+
   parseRawResult(result: any) {
     const { web = [], query = '', translation = [], errorCode = '', basic = {} } = result
     const { explains } = basic

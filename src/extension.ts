@@ -2,6 +2,7 @@
 import * as vscode from "vscode"
 import TranslatorX from './TranslatorX'
 import { trim } from './utils'
+import SpeakPanel from './SpeakPanel'
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -15,7 +16,11 @@ export function activate(context: vscode.ExtensionContext) {
 
   let enable = vscode.commands.registerCommand("extension.enable", () => {
       translatorX.setTranslatorXState(true)
-  })
+	})
+	
+	let test = vscode.commands.registerCommand("extension.test", (args) => {
+		SpeakPanel.getInstance(context.extensionPath).play(decodeURIComponent(args.speakUrl))
+	})
 
   let disable = vscode.commands.registerCommand("extension.disable", () => {
     translatorX.setTranslatorXState(false)
@@ -70,6 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	context.subscriptions.push(enable)
 	context.subscriptions.push(disable)
+	context.subscriptions.push(test)
 	context.subscriptions.push(replaceWithTranslationResults)
 }
 
