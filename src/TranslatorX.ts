@@ -35,7 +35,6 @@ class TranslatorX {
   }
 
   private onDidChangeConfiguration() {
-    console.log('-------')
     this.conf = this.getWordSpaceConfiguration()
   }
 
@@ -63,7 +62,7 @@ class TranslatorX {
     const result = []
     const replaceable = []
     const status = this.getTrarnslatorXState()
-
+    
     if (status && this.youdaoTranslator.getStatus()) {
       const { markdown, replaceableArr } = await this.youdaoTranslator.fetchStandardResult(params.word)
       result.push(markdown)

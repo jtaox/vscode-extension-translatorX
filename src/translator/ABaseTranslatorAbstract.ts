@@ -19,10 +19,8 @@ abstract class TranslatorAbstract {
    */
   abstract configSection: string
 
-  private extensionConfig: WorkspaceConfiguration
 
   constructor () {
-    this.extensionConfig = workspace.getConfiguration(EXTENSION_NAME)
   }
 
   /**
@@ -44,7 +42,7 @@ abstract class TranslatorAbstract {
    */
   getStatus(): boolean {
     const currentConfig = this.getConfig(this.configSection) || {}
-
+    
     return Boolean(currentConfig.enable)
   }
 
@@ -69,8 +67,12 @@ abstract class TranslatorAbstract {
     return undefined
   }
 
+  get workspaceConfiguration() {
+    return workspace.getConfiguration(EXTENSION_NAME)
+  }
+
   getConfig (section: string): any {
-    return this.extensionConfig.get(section)
+    return this.workspaceConfiguration.get(section)
   }
 
   /**
